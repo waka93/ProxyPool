@@ -2,12 +2,12 @@
 Maintain a dynamic proxy pool using flask and redis
 
 Requirements:
-aiohttp
-asyncio
-flask
-redis
-bs4
+aiohttp\n
+asyncio\n
+flask\n
+redis\n
+bs4\n
 
-In terminal, run the following command
+In terminal, run the following command\n
 $python start.py
 
