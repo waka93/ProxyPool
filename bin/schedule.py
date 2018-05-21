@@ -4,6 +4,7 @@ import aiohttp
 import asyncio
 import async_timeout
 import time
+import requests
 from bin.config import *
 
 
@@ -13,11 +14,17 @@ class PoolExtender(object):
         self.getter = ProxiesGetter()
 
     def check_pool(self):
+        """
+        Check if pool reached max capacity
+        """
         if self.conn.queue_len() < MAX_PROXIES:
             return True
         return False
 
     def add_to_pool(self):
+        """
+        add free proxies to pool
+        """
         if self.check_pool():
             for func in self.getter._func:
                 proxies = self.getter.get_proxies(func)
@@ -32,19 +39,31 @@ class PoolTester(object):
         self.conn = RedisClient()
 
     async def test_single_proxy(self, session, proxy):
+        """
+        asyncio test if the proxy if valid
+        if it is valid, push it to the right of the poll
+        otherwise, remove it
+        """
         with async_timeout.timeout(10):
             test_proxy = 'http://' + proxy
             print('Testing proxy', proxy)
             try:
-                async with session.get(TEST_URL, proxy=test_proxy) as response:
+                headers = HEADERS
+                headers['http'] = test_proxy
+                async with session.get(TEST_URL, headers=headers, allow_redirects=False) as response:
                     if response.status == 200:
                         self.conn.push(proxy)
                         print('Valid proxy', proxy)
+                    else:
+                        print('Invalid proxy {} Response status {}'.format(proxy, response.status))
             except:
-                print('Invalid proxy', proxy)
+                print('Invalid proxy {} Connection error'.format(proxy))
 
     async def test_proxies(self, loop):
-        proxies = self.conn.get(int(self.conn.queue_len()*.5))
+        """
+        asyncio test all proxies in current proxy pool
+        """
+        proxies = self.conn.get(int(self.conn.queue_len()))
         async with aiohttp.ClientSession(loop=loop) as session:
             tasks = [self.test_single_proxy(session, proxy) for proxy in proxies]
             await asyncio.gather(*tasks)

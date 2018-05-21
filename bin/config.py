@@ -9,9 +9,14 @@ HEADERS = {
 
 FREE_PROXY_URL1 = 'https://free-proxy-list.net/'
 FREE_PROXY_URL2 = 'https://hidemy.name/en/proxy-list/'
+FREE_PROXY_URL3 = 'https://www.kuaidaili.com/free/inha/'
 
-SLEEP_CYCLE = 30
 
-MAX_PROXIES = 100
-MIN_PROXIES = 20
+SLEEP_CYCLE = 40
+
+MAX_PROXIES = 500
+MIN_PROXIES = 100
+
+
 TEST_URL = 'https://www.douban.com/group/qiong/discussion?start=0'
+# TEST_URL = 'https://www.baidu.com'

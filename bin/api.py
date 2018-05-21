@@ -27,7 +27,10 @@ def get_proxy():
     Get a proxy
     """
     conn = get_conn()
-    return conn.pop()
+    if conn.queue_len() >= 1:
+        return conn.pop()
+    else:
+        return None
 
 
 @app.route('/count')
