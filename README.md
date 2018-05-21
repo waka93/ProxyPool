@@ -17,7 +17,7 @@ $sudo lsof -i:5000
 
 You will get a pid.Then
 
-$kill [pid]
+$kill pid
 
 
 
