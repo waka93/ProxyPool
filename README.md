@@ -19,5 +19,10 @@ You will get a pid.Then
 
 $kill pid
 
+Interfaces are provided by flask
 
+At 'localhost:5000/' you will see a welcome page.
 
+At 'localhost:5000/count' you will get the total number of proxies in proxy pool currently
+
+At 'localhost:5000/get' you will get the newest valid proxy in the proxy pool
