@@ -13,5 +13,5 @@ FREE_PROXY_URL2 = 'https://hidemy.name/en/proxy-list/'
 SLEEP_CYCLE = 30
 
 MAX_PROXIES = 100
-MIN_PROXIES = 10
+MIN_PROXIES = 20
 TEST_URL = 'https://www.douban.com/group/qiong/discussion?start=0'
