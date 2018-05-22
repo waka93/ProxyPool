@@ -17,6 +17,6 @@ SLEEP_CYCLE = 40
 MAX_PROXIES = 500
 MIN_PROXIES = 100
 
-
+# URL used to test proxies
 TEST_URL = 'https://www.douban.com/group/qiong/discussion?start=0'
 # TEST_URL = 'https://www.baidu.com'
