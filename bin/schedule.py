@@ -1,10 +1,9 @@
-from bin.RedisClient import RedisClient
-from bin.ProxiesGetter import ProxiesGetter
+from bin.redis_client import RedisClient
+from bin.proxies_getter import ProxiesGetter
 import aiohttp
 import asyncio
 import async_timeout
 import time
-import requests
 from bin.config import *
 
 
@@ -29,7 +28,7 @@ class PoolExtender(object):
             for func in self.getter._func:
                 proxies = self.getter.get_proxies(func)
                 for proxy in proxies:
-                    self.conn.push(proxy)
+                    self.conn.push_to_right(proxy)
         else:
             print('Pool reached max capacity')
 
@@ -52,7 +51,7 @@ class PoolTester(object):
                 headers['http'] = test_proxy
                 async with session.get(TEST_URL, headers=headers, allow_redirects=False) as response:
                     if response.status == 200:
-                        self.conn.push(proxy)
+                        self.conn.push_to_right(proxy)
                         print('Valid proxy', proxy)
                     else:
                         print('Invalid proxy {} Response status {}'.format(proxy, response.status))
