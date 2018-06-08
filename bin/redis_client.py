@@ -23,6 +23,7 @@ class RedisClient(object):
 
     def push_to_left(self, proxy):
         # add proxy to the left
+        self._db.lrem('proxies', proxy)
         self._db.lpush('proxies', proxy)
 
     def pop(self):
