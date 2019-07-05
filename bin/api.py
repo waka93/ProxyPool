@@ -1,5 +1,6 @@
 from flask import Flask, g
 from bin.redis_client import RedisClient
+from bin.config import HOST, PORT
 
 __all__ = ['app']
 
@@ -12,7 +13,7 @@ def get_conn():
     current application context.
     """
     if not hasattr(g, 'redis_client'):
-        g.redis_client = RedisClient()
+        g.redis_client = RedisClient(host=HOST, port=PORT)
     return g.redis_client
 
 

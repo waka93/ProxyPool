@@ -14,3 +14,11 @@ class PoolEmptyError(Exception):
 
     def __str__(self):
         return repr('The proxy pool is empty')
+
+class RedisClientSetupError(Exception):
+
+    def __init__(self):
+        Exception.__init__(self)
+    
+    def __str__(self):
+        return repr('Host and port are not supplied')

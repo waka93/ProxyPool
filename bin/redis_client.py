@@ -1,14 +1,12 @@
 import redis
-from bin.config import HOST, PORT, PASSWORD
-from bin.error import PoolEmptyError
+from bin.error import PoolEmptyError, RedisClientSetupError
 
 
 class RedisClient(object):
-    def __init__(self, host=HOST, port=PORT, password=PASSWORD):
-        if password:
-            self._db = redis.Redis(host=host, port=port, password=PASSWORD)
-        else:
-            self._db = redis.Redis(host=host, port=port)
+    def __init__(self, **kwargs):
+        if 'host' not in kwargs and 'port' not in kwargs:
+            raise(RedisClientSetupError)
+        self._db = redis.Redis(**kwargs)
 
     def get(self, count=1):
         # get the left n proxies
@@ -23,7 +21,7 @@ class RedisClient(object):
 
     def push_to_left(self, proxy):
         # add proxy to the left
-        self._db.lrem('proxies', proxy)
+        self._db.lrem('proxies', 1, proxy)
         self._db.lpush('proxies', proxy)
 
     def pop(self):
@@ -44,5 +42,4 @@ class RedisClient(object):
 
 if __name__ == '__main__':
     conn = RedisClient()
-    print(conn.random())
     print(str(conn.queue_len()))

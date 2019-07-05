@@ -48,23 +48,23 @@ class ProxiesGetter(object, metaclass=ProxiesGetterMetaclass):
                 yield proxy
         return None
 
-    def craw_hidemy(self):
-        url = FREE_PROXY_URL2
-        print('Getting proxies from ', url)
-        headers = {
-            'cookie': FREE_PROXY_URL2_COOKIES,
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
-        }
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            pattern = re.compile('<td class=tdl>(.*?)</td><td>(.*?)</td>')
-            for address, port in re.findall(pattern, response.text):
-                proxy = address + ':' + port
-                yield proxy
-        if response.status_code == 503:
-            print('Cookie needs to be updated')
-            return None
-        return None
+    # def craw_hidemy(self):
+    #     url = FREE_PROXY_URL2
+    #     print('Getting proxies from ', url)
+    #     headers = {
+    #         'cookie': FREE_PROXY_URL2_COOKIES,
+    #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
+    #     }
+    #     response = requests.get(url, headers=headers)
+    #     if response.status_code == 200:
+    #         pattern = re.compile('<td class=tdl>(.*?)</td><td>(.*?)</td>')
+    #         for address, port in re.findall(pattern, response.text):
+    #             proxy = address + ':' + port
+    #             yield proxy
+    #     if response.status_code == 503:
+    #         print('Cookie needs to be updated')
+    #         return None
+    #     return None
 
     # def craw_kuaidaili(self):
     #     url = FREE_PROXY_URL3
