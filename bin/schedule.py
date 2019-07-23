@@ -9,7 +9,7 @@ from bin.config import *
 
 class PoolExtender(object):
     def __init__(self):
-        self.conn = RedisClient()
+        self.conn = RedisClient(host=HOST, port=PORT)
         self.getter = ProxiesGetter()
 
     def check_pool(self):
